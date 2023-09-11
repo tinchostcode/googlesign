@@ -21,8 +21,13 @@ const usuariosPost = (req, res = response) => {
 }
 
 const usuariosPut = (req, res = response) => {
+    
+    const { id } = req.params;
+    
+    
     res.json({
-              msg:'Put API'  
+              msg:'Put API',
+              id
     });
 }
 
