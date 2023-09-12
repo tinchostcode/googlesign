@@ -1,8 +1,14 @@
-const { response } = require('express')
+const { response, request } = require('express')
 
-const usuariosGet = (req, res = response) => {
+const usuariosGet = (req = request, res = response) => {
+
+    const {q='hola como estas',nombre,apikey}= req.query;
+
     res.json({
-              msg:'get API'  
+              msg:'get API',
+              q,
+              nombre,
+              apikey  
     });
 }
 
