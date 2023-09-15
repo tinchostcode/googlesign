@@ -42,17 +42,24 @@ const usuariosPost =  async(req, res = response) => {
 }
 ///////////////////////////////////////////////// USUARIO PUT///////////////////////////////////////////////
 
-const usuariosPut = (req, res = response) => {
+const usuariosPut = async(req, res = response) => {
     
     const { id } = req.params;
-    
+    const{_id,password,google,correo,...resto} =req.body; 
+
+    if(password){
+        const salt =  bcryptjs.genSaltSync(10);
+        resto.password = bcryptjs.hashSync(password,salt)
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate( id, resto );
     
     res.json({
               msg:'Put API',
-              id
+              usuario
     });
 }
-
+////////////////////////////////////////////////USUARIO DELETE//////////////////////////////////////////
 const usuariosDelete = (req, res = response) => {
     res.json({
               msg:'Delete API'  
