@@ -6,22 +6,36 @@ const bcryptjs = require('bcryptjs');
 
 ///////////////////////////////////////////////// USUARIO GET///////////////////////////////////////////////
 
-const usuariosGet = (req = request, res = response) => {
+const usuariosGet = async(req = request, res = response) => {
 
-    const {q='hola como estas',nombre,apikey}= req.query;
+    //const {q='hola como estas',nombre,apikey}= req.query;
+    const {limite = 5, desde = 0} = req.query;
+    const query = {estado:true};
+
+    
+    const [total,usuarios] =await Promise.all([
+        
+        Usuario.countDocuments(),
+        Usuario.find()
+        .skip(Number(desde))
+        .limit(Number(limite))
+    ])
+    
+    
+    
+    
+
 
     res.json({
-              msg:'get API',
-              q,
-              nombre,
-              apikey  
+        total,     
+        usuarios
     });
 }
 
 ///////////////////////////////////////////////// USUARIO POST///////////////////////////////////////////////
 
 const usuariosPost =  async(req, res = response) => {
-    
+     
 
     //const body= req.body;   // body voy a tomar todo lo que envia del body
     const {nombre, correo, password, rol} = req.body;
@@ -55,7 +69,7 @@ const usuariosPut = async(req, res = response) => {
     const usuario = await Usuario.findByIdAndUpdate( id, resto );
     
     res.json({
-              msg:'Put API',
+              
               usuario
     });
 }
