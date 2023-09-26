@@ -74,10 +74,12 @@ const usuariosPut = async(req, res = response) => {
     });
 }
 ////////////////////////////////////////////////USUARIO DELETE//////////////////////////////////////////
-const usuariosDelete = (req, res = response) => {
-    res.json({
-              msg:'Delete API'  
-    });
+const usuariosDelete = async (req, res = response) => {
+    
+    const {id} = req.params;
+     //const usuario = await Usuario.findByIdAndDelete(id); entindad referencial 
+    const usuario = await Usuario.findByIdAndUpdate(id,{estado:false});
+    res.json(usuario);
 }
 
 ///////////////////////////////////////////////// USUARIO PATCH///////////////////////////////////////////////

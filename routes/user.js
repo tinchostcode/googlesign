@@ -47,7 +47,11 @@ router.post('/',[   // [MIDDLEWARES - 'camposDelBody que quiero validar' ]
 ],usuariosPost)
 
 
-router.delete('/',usuariosDelete)
+router.delete('/:id',[
+    check('id','No es ID Valido').isMongoId(),
+    check('id').custom(existeUsuarioPorId),
+    validarCampos
+],usuariosDelete)
 
 router.patch('/',usuariosPatch)
 
